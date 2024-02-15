@@ -1,3 +1,7 @@
+import findBestMove from "./minimax"
+import translateIndex from "./translateIndex"
+import translateIndex2 from "./translateIndex2"
+
 const Gameboard = (() => {
   const infoDisplay = document.querySelector("#info")
   const gameBoard = document.querySelector("#gameboard")
@@ -7,6 +11,13 @@ const Gameboard = (() => {
   let round = 1
   let go = "cross"
   infoDisplay.textContent = `It's round ${round} and ${go}'s turn`
+
+  // minimaxBoard variable is needed in the minimax function
+  let minimaxBoard = [
+    ["_", "_", "_"],
+    ["_", "_", "_"],
+    ["_", "_", "_"],
+  ]
 
   restartBtn.addEventListener("click", () => {
     deleteBoard(gameBoard)
@@ -36,17 +47,39 @@ const Gameboard = (() => {
     const div2 = document.createElement("div")
     div2.classList.add(go)
     e.target.append(div2)
+
+    let [r, c] = translateIndex(e.target.id)
+    //console.log(minimaxBoard)
+    if (go == "cross") {
+      minimaxBoard[r][c] = "x"
+    }
+    if (go == "circle") {
+      minimaxBoard[r][c] = "o"
+    }
+    if (go == "cross") {
+      let [bestRow, bestCol] = findBestMove(minimaxBoard)
+      console.log(
+        "its computers turn (circle) and it chooses",
+        bestRow,
+        bestCol
+      )
+      let bestIndex = translateIndex2(bestRow, bestCol)
+      displayBestMove(bestIndex)
+    }
+
     go = go === "circle" ? "cross" : "circle"
     round++
     infoDisplay.textContent = `It's round ${round} and ${go}'s turn`
 
-    // När det är datorns tur så ska jag anropa BestMove här
-    // sedan printar jag circle i den diven som best move är
-    // tar bort addeventlistener (så att jag inte kan klicka på den)
-    // och kollar ifall vi har en vinnare.
-
     e.target.removeEventListener("click", addGo)
     checkWinner()
+  }
+
+  const displayBestMove = (index) => {
+    let Best = document.getElementById(`${index}`)
+    let div = document.createElement("div")
+    div.classList.add("circle")
+    Best.appendChild(div)
   }
 
   const checkWinner = () => {

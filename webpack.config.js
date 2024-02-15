@@ -9,7 +9,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/template.html",
     }),
-    new FaviconsWebpackPlugin("./src/umbrellaicon.png"),
+    new FaviconsWebpackPlugin("./src/assets/favicon.png"),
   ],
   output: {
     filename: "bundle.js",
