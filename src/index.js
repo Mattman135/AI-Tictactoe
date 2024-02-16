@@ -147,7 +147,5 @@ const Gameboard = (() => {
   return { createBoard }
 })()
 
-const displayController = (() => {
-  const Board = Gameboard
-  Board.createBoard()
-})()
+const Board = Gameboard
+Board.createBoard()
