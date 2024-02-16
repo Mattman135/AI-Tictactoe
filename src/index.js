@@ -22,6 +22,11 @@ const Gameboard = (() => {
   restartBtn.addEventListener("click", () => {
     deleteBoard(gameBoard)
     createBoard()
+    minimaxBoard = [
+      ["_", "_", "_"],
+      ["_", "_", "_"],
+      ["_", "_", "_"],
+    ]
     round = 0
     go = "cross"
     infoDisplay.textContent = `It's round ${round} and ${go}'s turn`
@@ -44,42 +49,44 @@ const Gameboard = (() => {
   }
 
   const addGo = (e) => {
+    let [r, c] = translateIndex(e.target.id)
+
     const div2 = document.createElement("div")
     div2.classList.add(go)
     e.target.append(div2)
+    minimaxBoard[r][c] = "x"
 
-    let [r, c] = translateIndex(e.target.id)
-    //console.log(minimaxBoard)
-    if (go == "cross") {
-      minimaxBoard[r][c] = "x"
-    }
-    if (go == "circle") {
-      minimaxBoard[r][c] = "o"
-    }
-    if (go == "cross") {
-      let [bestRow, bestCol] = findBestMove(minimaxBoard)
-      console.log(
-        "its computers turn (circle) and it chooses",
-        bestRow,
-        bestCol
-      )
-      let bestIndex = translateIndex2(bestRow, bestCol)
-      displayBestMove(bestIndex)
-    }
+    // Ha någon funktion här som displayComputerMove och async waitar så
+    // det ser ut som att vi väntar på funktionen
 
-    go = go === "circle" ? "cross" : "circle"
+    displayComputerMove()
+    //console.log(e.target)
+    //go = go === "circle" ? "cross" : "circle"
     round++
     infoDisplay.textContent = `It's round ${round} and ${go}'s turn`
-
     e.target.removeEventListener("click", addGo)
     checkWinner()
   }
 
-  const displayBestMove = (index) => {
-    let Best = document.getElementById(`${index}`)
-    let div = document.createElement("div")
-    div.classList.add("circle")
-    Best.appendChild(div)
+  const displayComputerMove = () => {
+    //console.log(minimaxBoard)
+    let [bestRow, bestCol] = findBestMove(minimaxBoard)
+    try {
+      minimaxBoard[bestRow][bestCol] = "o"
+      let bestIndex = translateIndex2(bestRow, bestCol)
+      //console.log(bestIndex)
+      let Best = document.getElementById(`${bestIndex}`)
+      let div = document.createElement("div")
+      div.classList.add("circle")
+      Best.appendChild(div)
+
+      let div2 = document.getElementById(`${bestIndex}`)
+      //console.log(div2)
+      div2.removeEventListener("click", addGo)
+    } catch {
+      //console.log("Rowindex:", bestRow, "Colindex:", bestCol)
+      console.log("its a draw")
+    }
   }
 
   const checkWinner = () => {
