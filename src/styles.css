@@ -73,13 +73,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   font-weight: bold;
-}
-
-img {
-  width: 20px;
-  height: 20px;
 }
 
 .chooseWeaponDiv {

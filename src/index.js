@@ -1,3 +1,4 @@
+import "./styles.css"
 import findBestMove from "./minimax"
 import translateIndex from "./translateIndex"
 import translateIndex2 from "./translateIndex2"
@@ -12,7 +13,6 @@ const Gameboard = (() => {
   let go = "cross"
   infoDisplay.textContent = `It's round ${round} and ${go}'s turn`
 
-  // minimaxBoard variable is needed in the minimax function
   let minimaxBoard = [
     ["_", "_", "_"],
     ["_", "_", "_"],
@@ -56,12 +56,8 @@ const Gameboard = (() => {
     e.target.append(div2)
     minimaxBoard[r][c] = "x"
 
-    // Ha någon funktion här som displayComputerMove och async waitar så
-    // det ser ut som att vi väntar på funktionen
-
     displayComputerMove()
-    //console.log(e.target)
-    //go = go === "circle" ? "cross" : "circle"
+
     round++
     infoDisplay.textContent = `It's round ${round} and ${go}'s turn`
     e.target.removeEventListener("click", addGo)
@@ -69,22 +65,20 @@ const Gameboard = (() => {
   }
 
   const displayComputerMove = () => {
-    //console.log(minimaxBoard)
     let [bestRow, bestCol] = findBestMove(minimaxBoard)
     try {
       minimaxBoard[bestRow][bestCol] = "o"
       let bestIndex = translateIndex2(bestRow, bestCol)
-      //console.log(bestIndex)
+
       let Best = document.getElementById(`${bestIndex}`)
       let div = document.createElement("div")
       div.classList.add("circle")
       Best.appendChild(div)
 
       let div2 = document.getElementById(`${bestIndex}`)
-      //console.log(div2)
+
       div2.removeEventListener("click", addGo)
     } catch {
-      //console.log("Rowindex:", bestRow, "Colindex:", bestCol)
       console.log("its a draw")
     }
   }
