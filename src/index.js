@@ -4,14 +4,14 @@ import translateIndex from "./translateIndex"
 import translateIndex2 from "./translateIndex2"
 
 const Gameboard = (() => {
-  const infoDisplay = document.querySelector("#info")
+  //const //infoDisplay = document.querySelector("#info")
   const gameBoard = document.querySelector("#gameboard")
   const cellElements = ["", "", "", "", "", "", "", "", ""]
   const restartBtn = document.querySelector("#restartBtn")
 
   let round = 1
   let go = "cross"
-  infoDisplay.textContent = `It's round ${round} and ${go}'s turn`
+  //infoDisplay.textContent = `It's round ${round} and ${go}'s turn`
 
   let minimaxBoard = [
     ["_", "_", "_"],
@@ -29,7 +29,7 @@ const Gameboard = (() => {
     ]
     round = 0
     go = "cross"
-    infoDisplay.textContent = `It's round ${round} and ${go}'s turn`
+    //infoDisplay.textContent = `It's round ${round} and ${go}'s turn`
   })
 
   const deleteBoard = (parent) => {
@@ -59,7 +59,7 @@ const Gameboard = (() => {
     displayComputerMove()
 
     round++
-    infoDisplay.textContent = `It's round ${round} and ${go}'s turn`
+    //infoDisplay.textContent = `It's round ${round} and ${go}'s turn`
     e.target.removeEventListener("click", addGo)
     checkWinner()
   }
@@ -103,13 +103,13 @@ const Gameboard = (() => {
       )
 
       if (crossWins) {
-        infoDisplay.textContent = "Cross wins"
+        //infoDisplay.textContent = "Cross wins"
         allSquares.forEach((square) =>
           square.replaceWith(square.cloneNode(true))
         )
         return
       } else if (round === 10 && !crossWins) {
-        infoDisplay.textContent = `It's a draw`
+        //infoDisplay.textContent = `It's a draw`
         allSquares.forEach((square) =>
           square.replaceWith(square.cloneNode(true))
         )
@@ -123,13 +123,13 @@ const Gameboard = (() => {
       )
 
       if (circleWins) {
-        infoDisplay.textContent = "Circle wins"
+        //infoDisplay.textContent = "Circle wins"
         allSquares.forEach((square) =>
           square.replaceWith(square.cloneNode(true))
         )
         return
       } else if (round === 10 && !circleWins) {
-        infoDisplay.textContent = `It's a draw`
+        //infoDisplay.textContent = `It's a draw`
         allSquares.forEach((square) =>
           square.replaceWith(square.cloneNode(true))
         )
